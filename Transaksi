@@ -1,0 +1,39 @@
+public class Transaksi {
+    private String idTransaksi;
+    private Pelanggan pelanggan;
+    private Produk produk;
+    private int jumlahBeli;
+    private double totalHarga;
+
+    public Transaksi(String idTransaksi, Pelanggan pelanggan, Produk produk, int jumlahBeli) {
+        this.idTransaksi = idTransaksi;
+        this.pelanggan = pelanggan;
+        this.produk = produk;
+        this.jumlahBeli = jumlahBeli;
+        this.totalHarga = produk.getHarga() * jumlahBeli;
+    }
+
+    public void prosesTransaksi() {
+        if (produk.kurangiStok(jumlahBeli) && pelanggan.kurangiSaldo(totalHarga)) {
+            System.out.println("Transaksi berhasil!");
+        } else {
+            System.out.println("Transaksi gagal!");
+        }
+    }
+
+    public void tampilkanDetailTransaksi() {
+        System.out.println("ID Transaksi: " + idTransaksi + ", Pelanggan: " + pelanggan.getNama() + 
+                           ", Produk: " + produk.getNamaProduk() + ", Jumlah: " + jumlahBeli + 
+                           ", Total Harga: " + totalHarga);
+    }
+
+    public static void main(String[] args) {
+        // Contoh penggunaan
+        Produk produk1 = new Produk("P001", "Laptop", 15000000, 5);
+        Pelanggan pelanggan1 = new Pelanggan("C001", "Adi", "adi@example.com", 20000000);
+        
+        Transaksi transaksi1 = new Transaksi("T001", pelanggan1, produk1, 1);
+        transaksi1.prosesTransaksi();
+        transaksi1.tampilkanDetailTransaksi();
+    }
+}
